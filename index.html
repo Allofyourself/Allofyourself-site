@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>All of Yourself</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <!-- Mobile polish: status bar & Home Screen icon -->
+<meta name="theme-color" content="#000000">
+<link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+
+<style>
+/* === INLINE HAMBURGER + MENU (authoritative, tweaked to match DG style: 3 lines, gold hover, smoother anim, fade middle) === */
+#navbar { display:flex; align-items:center; justify-content:center; }
+/* Keep existing nav visuals from your CSS; this only adds positioning/visibility for the hamburger */
+.hamburger {
+  --gap: 6px; /* Slightly reduced for elegance */
+  position: absolute; left: 1rem; top: 50%; transform: translateY(-50%);
+  width: 32px; height: 24px; display: inline-flex !important; align-items: center; justify-content: center;
+  background: transparent; border: 0; cursor: pointer; z-index: 3000;
+}
+.hamburger:focus { outline: none; }
+.hamburger-line {
+  position: absolute; left: 50%; top: 50%;
+  width: 28px; height: 2px; background: #fff; box-shadow: 0 0 10px rgba(255,255,255,0.95);
+  transform-origin: center;
+  transition: transform 0.45s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease; /* Smoother bezier for luxury feel */
+}
+.hamburger-line:first-child { transform: translate(-50%, calc(-50% - var(--gap))); }
+.hamburger-line:nth-child(2) { transform: translate(-50%, -50%); }
+.hamburger-line:last-child { transform: translate(-50%, calc(-50% + var(--gap))); }
+.hamburger:hover .hamburger-line { background: #d4af37; /* Subtle gold hover like DG luxury accents */ }
+.hamburger:hover .hamburger-line:first-child { transform: translate(-50%, calc(-50% - (var(--gap) + 2px))); }
+.hamburger:hover .hamburger-line:last-child { transform: translate(-50%, calc(-50% + (var(--gap) + 2px))); }
+.hamburger.open .hamburger-line:first-child { transform: translate(-50%, -50%) rotate(45deg); }
+.hamburger.open .hamburger-line:nth-child(2) { opacity: 0; } /* Fade middle line for 'X' formation */
+.hamburger.open .hamburger-line:last-child { transform: translate(-50%, -50%) rotate(-45deg); }
+
+.mobile-menu { position: fixed; inset: 0; background: rgba(0,0,0,0); opacity: 0; pointer-events: none; transition: opacity 0.5s ease; z-index: 2500; }
+.mobile-menu.open { opacity: 1; pointer-events: auto; }
+.mobile-menu-panel {
+  position: absolute; top: 4rem; left: 0.8rem; width: 320px; height: calc(100vh - 5rem);
+  border: 1.5px solid rgba(255,255,255,0.95); background: rgba(30,30,30,0.45); backdrop-filter: blur(12px); /* Enhanced blur for DG-like polish */
+  border-radius: 14px; box-shadow: 0 0 30px rgba(0,0,0,0.55); transform: translateX(-28px); opacity: 0;
+  transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.6s ease; overflow-y: auto; /* Smoother slide-in */
+}
+.mobile-menu.open .mobile-menu-panel { transform: translateX(0); opacity: 1; }
+.mobile-menu-inner { display:flex; flex-direction:column; padding:1rem 1rem 1.25rem; }
+.mobile-link { color:#fff; text-decoration:none; font-family:'Playfair Display', serif; font-size:1.25rem; padding:0.85rem 0.4rem; transition: transform 0.2s ease, text-shadow 0.2s ease, opacity 0.2s ease; opacity: 0.96; }
+.mobile-link:hover { transform: translateX(4px); text-shadow: 0 0 8px rgba(255,255,255,0.75); }
+.menu-sep { height:1px; margin:2px 0; background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 20%, rgba(255,255,255,0.8) 80%, rgba(255,255,255,0) 100%); opacity:0.85; }
+
+@media (max-width: 1024px) { #navbar .nav-links { display: none; } }
+</style>
+</head>
+<body class="home">
+  <video class="bg-video" autoplay muted playsinline>
+    <source src="assets/videos/nature-video.mp4" type="video/mp4" />
+  </video>
+  
+<nav id="navbar" aria-label="Primary">
+  <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+    <span class="hamburger-line"></span>
+    <span class="hamburger-line"></span>
+    <span class="hamburger-line"></span>
+  </button>
+  <div class="nav-links">
+    <a href="#" onclick="showSection('home')">Home</a>
+    <a href="#" onclick="showSection('about')">About</a>
+    <a href="#" onclick="showSection('products')">Our Products</a>
+    <a href="#" onclick="showSection('videos')">Media</a>
+    <a href="#" onclick="showSection('herbs')">Healing Herbs</a>
+    <a href="#" onclick="showSection('contact')">Contact Us</a>
+  </div>
+</nav>
+<aside id="mobileMenu" class="mobile-menu" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+  <div class="mobile-menu-panel">
+    <nav class="mobile-menu-inner">
+      <a href="#" class="mobile-link" onclick="showSection('home')">Home</a><div class="menu-sep"></div>
+      <a href="#" class="mobile-link" onclick="showSection('about')">About</a><div class="menu-sep"></div>
+      <a href="#" class="mobile-link" onclick="showSection('products')">Our Products</a><div class="menu-sep"></div>
+      <a href="#" class="mobile-link" onclick="showSection('videos')">Media</a><div class="menu-sep"></div>
+      <a href="#" class="mobile-link" onclick="showSection('herbs')">Healing Herbs</a><div class="menu-sep"></div>
+      <a href="#" class="mobile-link" onclick="showSection('contact')">Contact Us</a>
+    </nav>
+  </div>
+</aside>
+
+  <header id="home">
+    <div>
+      <img src="assets/images/white.png" alt="All of Yourself Logo" onclick="restartVideo()" />
+      <h1>All of Yourself</h1>
+      <p class="motto">Where nature remembers what we've forgotten</p>
+      <div class="quote">
+        “The root of all ailments is forgetting our true nature.”<br />
+        <span>— Charaka Samhita</span>
+      </div>
+      <div class="social-icons">
+        <a href="https://www.instagram.com/allofyourselfwellness/" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.facebook.com/allofyourslf/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://x.com/AllofYourself" target="_blank"><i class="fab fa-twitter"></i></a>
+        <a href="http://youtube.com/@allofyourself" target="_blank"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+  </header>
+  <section id="about" class="content-section">
+    <img src="assets/images/sunnyfields.jpg" alt="About Background">
+    <p>At All of Yourself, our mission is to inspire a return to nature’s embrace, where purity and authenticity guide the path to wellness. We champion organic, non-GMO ingredients, free from artificial additives, to bring relief to body and mind in a world often overwhelmed by stress. Our commitment is to craft products that honor your health with the highest standards of integrity, nurturing a deeper connection to the vibrant, healing power of nature.</p>
+    <p>We believe that true well-being begins with simplicity and care. By prioritizing purity in every ingredient, we aim to restore balance and vitality, helping you navigate life’s challenges with clarity and strength. Join us in rediscovering the wisdom of nature, where every step forward is a step toward a healthier, more harmonious you.</p>
+    <div class="quote">
+      “Let food be thy medicine and medicine be thy food.”<br />
+      <span>— Hippocrates</span>
+    </div>
+  </section>
+  <section id="products" class="content-section">
+    <p>At All of Yourself, we are thrilled to introduce our upcoming supplement line, crafted with an unwavering commitment to purity and care. Each product is thoughtfully formulated using only the finest organic, non-GMO ingredients, free from unnecessary binders or fillers. We believe in honoring your body’s natural wisdom by offering supplements that nurture your well-being with integrity and transparency, sourced from nature’s most potent offerings.</p>
+    <img src="assets/images/ourproducts.jpg" alt="Our Products">
+    <p>Our passion is to empower you to reconnect with your true self through products that reflect our dedication to quality and sustainability. From vibrant herbs to essential nutrients, every capsule is a step toward holistic health, designed to support you with the gentle, powerful touch of nature. Because we care deeply, we’re here to bring you the purest path to vitality.</p>
+  </section>
+  <section id="videos" class="content-section">
+    <div class="video-hero">
+      <a href="https://youtube.com/@allofyourself" target="_blank">
+        <img src="assets/videos/hero-video.jpg" alt="Hero Video">
+        <i class="fas fa-play-circle play-button"></i>
+      </a>
+    </div>
+    <div class="video-carousel">
+      <div class="carousel-track">
+        <a href="https://youtube.com/@allofyourself" target="_blank" class="video-card">
+          <img src="assets/videos/video1.jpg" alt="Video 1">
+          <i class="fas fa-play-circle play-button"></i>
+          <h3>Exploring Herbal Wellness</h3>
+        </a>
+        <a href="https://youtube.com/@allofyourself" target="_blank" class="video-card">
+          <img src="assets/videos/video2.jpg" alt="Video 2">
+          <i class="fas fa-play-circle play-button"></i>
+          <h3>Nature’s Healing Power</h3>
+        </a>
+        <a href="https://youtube.com/@allofyourself" target="_blank" class="video-card">
+          <img src="assets/videos/video3.jpg" alt="Video 3">
+          <i class="fas fa-play-circle play-button"></i>
+          <h3>Organic Living Tips</h3>
+        </a>
+        <a href="https://youtube.com/@allofyourself" target="_blank" class="video-card">
+          <img src="assets/videos/video4.jpg" alt="Video 4">
+          <i class="fas fa-play-circle play-button"></i>
+          <h3>Holistic Health Journey</h3>
+        </a>
+        <a href="https://youtube.com/@allofyourself" target="_blank" class="video-card">
+          <img src="assets/videos/video5.jpg" alt="Video 5">
+          <i class="fas fa-play-circle play-button"></i>
+          <h3>Mindful Wellness Practices</h3>
+        </a>
+        <a href="https://youtube.com/@allofyourself" target="_blank" class="video-card">
+          <img src="assets/videos/video6.jpg" alt="Video 6">
+          <i class="fas fa-play-circle play-button"></i>
+          <h3>Sustainable Living</h3>
+        </a>
+      </div>
+      <div class="carousel-nav">
+        <button class="prev"><i class="fas fa-chevron-left"></i></button>
+        <button class="next"><i class="fas fa-chevron-right"></i></button>
+      </div>
+    </div>
+  </section>
+  <section id="herbs" class="content-section">
+    <div class="herb-grid" id="herbGrid">
+      <div class="herb-card">
+        <div class="herb-inner">
+          <div class="herb-front">
+            <img src="assets/herbs/turmeric.jpg" alt="Turmeric">
+            <h3>Turmeric</h3>
+            <p><strong>Scientific name:</strong> Curcuma longa</p>
+            <p><strong>Origin:</strong> India</p>
+          </div>
+          <div class="herb-back">
+            <img src="assets/herbs/turmeric2.jpg" alt="Turmeric">
+            <h3>Health Benefits</h3>
+            <p>• Reduces inflammation</p>
+            <p>• Acts as a powerful antioxidant</p>
+            <p>• Supports digestive health</p>
+            <p>• Enhances brain function</p>
+            <p>• Boosts immune system</p>
+            <p>• Promotes heart health</p>
+            <p>• Supports joint mobility</p>
+          </div>
+        </div>
+      </div>
+      <div class="herb-card">
+        <div class="herb-inner">
+          <div class="herb-front">
+            <img src="assets/herbs/ashwagandha.jpg" alt="Ashwagandha">
+            <h3>Ashwagandha</h3>
+            <p><strong>Scientific name:</strong> Withania somnifera</p>
+            <p><strong>Origin:</strong> India</p>
+          </div>
+          <div class="herb-back">
+            <img src="assets/herbs/ashwagandha2.jpg" alt="Ashwagandha">
+            <h3>Health Benefits</h3>
+            <p>• Reduces stress and anxiety</p>
+            <p>• Improves sleep quality</p>
+            <p>• Enhances stamina and energy</p>
+            <p>• Supports hormone balance</p>
+            <p>• Boosts cognitive function</p>
+            <p>• Strengthens immune system</p>
+            <p>• Promotes muscle strength</p>
+          </div>
+        </div>
+      </div>
+      <div class="herb-card">
+        <div class="herb-inner">
+          <div class="herb-front">
+            <img src="assets/herbs/oregano.jpg" alt="Oregano">
+            <h3>Oregano</h3>
+            <p><strong>Scientific name:</strong> Origanum vulgare</p>
+            <p><strong>Origin:</strong> Mediterranean</p>
+          </div>
+          <div class="herb-back">
+            <img src="assets/herbs/oregano2.jpg" alt="Oregano">
+            <h3>Health Benefits</h3>
+            <p>• Exhibits antimicrobial properties</p>
+            <p>• Supports respiratory health</p>
+            <p>• Rich in antioxidants</p>
+            <p>• Aids digestion</p>
+            <p>• Boosts immune defense</p>
+            <p>• Promotes skin health</p>
+            <p>• Reduces inflammation</p>
+          </div>
+        </div>
+      </div>
+      <div class="herb-card">
+        <div class="herb-inner">
+          <div class="herb-front">
+            <img src="assets/herbs/shilajit.jpg" alt="Shilajit">
+            <h3>Shilajit</h3>
+            <p><strong>Scientific name:</strong> Asphaltum</p>
+            <p><strong>Origin:</strong> Himalayas</p>
+          </div>
+          <div class="herb-back">
+            <img src="assets/herbs/shilajit2.jpg" alt="Shilajit">
+            <h3>Health Benefits</h3>
+            <p>• Boosts energy and vitality</p>
+            <p>• Enhances cognitive function</p>
+            <p>• Improves nutrient absorption</p>
+            <p>• Promotes anti-aging</p>
+            <p>• Strengthens immune system</p>
+            <p>• Supports bone health</p>
+            <p>• Enhances testosterone levels</p>
+          </div>
+        </div>
+      </div>
+      <div class="herb-card">
+        <div class="herb-inner">
+          <div class="herb-front">
+            <img src="assets/herbs/nattokinase.jpg" alt="Nattokinase">
+            <h3>Nattokinase</h3>
+            <p><strong>Scientific name:</strong> Subtilisin NAT</p>
+            <p><strong>Origin:</strong> Japan</p>
+          </div>
+          <div class="herb-back">
+            <img src="assets/herbs/nattokinase2.jpg" alt="Nattokinase">
+            <h3>Health Benefits</h3>
+            <p>• Supports circulatory health</p>
+            <p>• Helps prevent blood clots</p>
+            <p>• Reduces blood pressure</p>
+            <p>• Promotes heart health</p>
+            <p>• Enhances blood flow</p>
+            <p>• Supports vascular health</p>
+            <p>• Improves cardiovascular function</p>
+          </div>
+        </div>
+      </div>
+      <div class="herb-card">
+        <div class="herb-inner">
+          <div class="herb-front">
+            <img src="assets/herbs/blackseed.jpg" alt="Black Seed">
+            <h3>Black Seed</h3>
+            <p><strong>Scientific name:</strong> Nigella sativa</p>
+            <p><strong>Origin:</strong> Middle East</p>
+          </div>
+          <div class="herb-back">
+            <img src="assets/herbs/blackseed2.jpg" alt="Black Seed">
+            <h3>Health Benefits</h3>
+            <p>• Boosts immune system</p>
+            <p>• Supports liver health</p>
+            <p>• Reduces inflammation</p>
+            <p>• Fights oxidative stress</p>
+            <p>• Promotes skin health</p>
+            <p>• Supports digestive health</p>
+            <p>• Enhances respiratory function</p>
+          </div>
+        </div>
+      </div>
+      <div class="herb-card">
+        <div class="herb-inner">
+          <div class="herb-front">
+            <img src="assets/herbs/sage.jpg" alt="Sage">
+            <h3>Sage</h3>
+            <p><strong>Scientific name:</strong> Salvia officinalis</p>
+            <p><strong>Origin:</strong> Mediterranean</p>
+          </div>
+          <div class="herb-back">
+            <img src="assets/herbs/sage2.jpg" alt="Sage">
+            <h3>Health Benefits</h3>
+            <p>• Enhances memory</p>
+            <p>• Soothes sore throat</p>
+            <p>• Improves digestion</p>
+            <p>• Balances cholesterol</p>
+            <p>• Eases menopausal symptoms</p>
+            <p>• Supports oral health</p>
+            <p>• Boosts cognitive function</p>
+          </div>
+        </div>
+      </div>
+      <div class="herb-card">
+        <div class="herb-inner">
+          <div class="herb-front">
+            <img src="assets/herbs/pycnogenol.jpg" alt="Pycnogenol">
+            <h3>Pycnogenol</h3>
+            <p><strong>Scientific name:</strong> Pinus pinaster bark extract</p>
+            <p><strong>Origin:</strong> France</p>
+          </div>
+          <div class="herb-back">
+            <img src="assets/herbs/pycnogenol2.jpg" alt="Pycnogenol">
+            <h3>Health Benefits</h3>
+            <p>• Supports vascular health</p>
+            <p>• Enhances skin elasticity</p>
+            <p>• Improves cognitive function</p>
+            <p>• Balances blood sugar</p>
+            <p>• Fights oxidative stress</p>
+            <p>• Supports joint health</p>
+            <p>• Promotes eye health</p>
+          </div>
+        </div>
+      </div>
+      <div class="herb-card">
+        <div class="herb-inner">
+          <div class="herb-front">
+            <img src="assets/herbs/ginger.jpg" alt="Ginger">
+            <h3>Ginger</h3>
+            <p><strong>Scientific name:</strong> Zingiber officinale</p>
+            <p><strong>Origin:</strong> Southeast Asia</p>
+          </div>
+          <div class="herb-back">
+            <img src="assets/herbs/ginger2.jpg" alt="Ginger">
+            <h3>Health Benefits</h3>
+            <p>• Eases nausea</p>
+            <p>• Reduces inflammation</p>
+            <p>• Supports digestion</p>
+            <p>• Boosts immune system</p>
+            <p>• Lowers blood sugar</p>
+            <p>• Promotes heart health</p>
+            <p>• Enhances brain function</p>
+          </div>
+        </div>
+      </div>
+      <div class="herb-card">
+        <div class="herb-inner">
+          <div class="herb-front">
+            <img src="assets/herbs/cinnamon.jpg" alt="Cinnamon">
+            <h3>Cinnamon</h3>
+            <p><strong>Scientific name:</strong> Cinnamomum verum</p>
+            <p><strong>Origin:</strong> Sri Lanka</p>
+          </div>
+          <div class="herb-back">
+            <img src="assets/herbs/cinnamon2.jpg" alt="Cinnamon">
+            <h3>Health Benefits</h3>
+            <p>• Regulates blood sugar</p>
+            <p>• Rich in antioxidants</p>
+            <p>• Reduces inflammation</p>
+            <p>• Supports heart health</p>
+            <p>• Fights bacterial infections</p>
+            <p>• Enhances brain function</p>
+            <p>• Promotes weight loss</p>
+          </div>
+        </div>
+      </div>
+      <div class="herb-card">
+        <div class="herb-inner">
+          <div class="herb-front">
+            <img src="assets/herbs/ginseng.jpg" alt="Ginseng">
+            <h3>Ginseng</h3>
+            <p><strong>Scientific name:</strong> Panax ginseng</p>
+            <p><strong>Origin:</strong> East Asia</p>
+          </div>
+          <div class="herb-back">
+            <img src="assets/herbs/ginseng2.jpg" alt="Ginseng">
+            <h3>Health Benefits</h3>
+            <p>• Boosts energy levels</p>
+            <p>• Enhances cognitive function</p>
+            <p>• Reduces stress</p>
+            <p>• Supports immune system</p>
+            <p>• Improves blood sugar control</p>
+            <p>• Promotes heart health</p>
+            <p>• Enhances physical endurance</p>
+          </div>
+        </div>
+      </div>
+      <div class="herb-card">
+        <div class="herb-inner">
+          <div class="herb-front">
+            <img src="assets/herbs/echinacea.jpg" alt="Echinacea">
+            <h3>Echinacea</h3>
+            <p><strong>Scientific name:</strong> Echinacea purpurea</p>
+            <p><strong>Origin:</strong> North America</p>
+          </div>
+          <div class="herb-back">
+            <img src="assets/herbs/echinacea2.jpg" alt="Echinacea">
+            <h3>Health Benefits</h3>
+            <p>• Boosts immune system</p>
+            <p>• Reduces cold symptoms</p>
+            <p>• Fights infections</p>
+            <p>• Supports respiratory health</p>
+            <p>• Acts as an antioxidant</p>
+            <p>• Promotes skin health</p>
+            <p>• Reduces inflammation</p>
+          </div>
+        </div>
+      </div>
+      <div class="herb-card">
+        <div class="herb-inner">
+          <div class="herb-front">
+            <img src="assets/herbs/moringa.jpg" alt="Moringa">
+            <h3>Moringa</h3>
+            <p><strong>Scientific name:</strong> Moringa oleifera</p>
+            <p><strong>Origin:</strong> India</p>
+          </div>
+          <div class="herb-back">
+            <img src="assets/herbs/moringa2.jpg" alt="Moringa">
+            <h3>Health Benefits</h3>
+            <p>• Rich in nutrients</p>
+            <p>• Acts as an antioxidant</p>
+            <p>• Reduces inflammation</p>
+            <p>• Supports blood sugar control</p>
+            <p>• Promotes heart health</p>
+            <p>• Enhances skin health</p>
+            <p>• Boosts energy levels</p>
+          </div>
+        </div>
+      </div>
+      <div class="herb-card">
+        <div class="herb-inner">
+          <div class="herb-front">
+            <img src="assets/herbs/basil.jpg" alt="Holy Basil">
+            <h3>Holy Basil</h3>
+            <p><strong>Scientific name:</strong> Ocimum sanctum</p>
+            <p><strong>Origin:</strong> India</p>
+          </div>
+          <div class="herb-back">
+            <img src="assets/herbs/basil2.jpg" alt="Holy Basil">
+            <h3>Health Benefits</h3>
+            <p>• Reduces stress</p>
+            <p>• Supports respiratory health</p>
+            <p>• Enhances immune system</p>
+            <p>• Promotes heart health</p>
+            <p>• Improves digestion</p>
+            <p>• Balances blood sugar</p>
+            <p>• Acts as an antioxidant</p>
+          </div>
+        </div>
+      </div>
+      <div class="herb-card">
+        <div class="herb-inner">
+          <div class="herb-front">
+            <img src="assets/herbs/peppermint.jpg" alt="Peppermint">
+            <h3>Peppermint</h3>
+            <p><strong>Scientific name:</strong> Mentha piperita</p>
+            <p><strong>Origin:</strong> Europe</p>
+          </div>
+          <div class="herb-back">
+            <img src="assets/herbs/peppermint2.jpg" alt="Peppermint">
+            <h3>Health Benefits</h3>
+            <p>• Relieves digestive issues</p>
+            <p>• Eases headaches</p>
+            <p>• Supports respiratory health</p>
+            <p>• Boosts energy</p>
+            <p>• Improves mental focus</p>
+            <p>• Reduces muscle pain</p>
+            <p>• Promotes oral health</p>
+          </div>
+        </div>
+      </div>
+      <div class="herb-card">
+        <div class="herb-inner">
+          <div class="herb-front">
+            <img src="assets/herbs/garlic.jpg" alt="Garlic">
+            <h3>Garlic</h3>
+            <p><strong>Scientific name:</strong> Allium sativum</p>
+            <p><strong>Origin:</strong> Central Asia</p>
+          </div>
+          <div class="herb-back">
+            <img src="assets/herbs/garlic2.jpg" alt="Garlic">
+            <h3>Health Benefits</h3>
+            <p>• Boosts immune system</p>
+            <p>• Reduces blood pressure</p>
+            <p>• Supports heart health</p>
+            <p>• Acts as an antioxidant</p>
+            <p>• Fights infections</p>
+            <p>• Improves cholesterol levels</p>
+            <p>• Enhances detoxification</p>
+          </div>
+        </div>
+      </div>
+      <div class="herb-card">
+        <div class="herb-inner">
+          <div class="herb-front">
+            <img src="assets/herbs/rosemary.jpg" alt="Rosemary">
+            <h3>Rosemary</h3>
+            <p><strong>Scientific name:</strong> Rosmarinus officinalis</p>
+            <p><strong>Origin:</strong> Mediterranean</p>
+          </div>
+          <div class="herb-back">
+            <img src="assets/herbs/rosemary2.jpg" alt="Rosemary">
+            <h3>Health Benefits</h3>
+            <p>• Enhances memory</p>
+            <p>• Acts as an antioxidant</p>
+            <p>• Supports digestion</p>
+            <p>• Improves circulation</p>
+            <p>• Reduces inflammation</p>
+            <p>• Promotes hair growth</p>
+            <p>• Boosts immune system</p>
+          </div>
+        </div>
+      </div>
+      <div class="herb-card">
+        <div class="herb-inner">
+          <div class="herb-front">
+            <img src="assets/herbs/thyme.jpg" alt="Thyme">
+            <h3>Thyme</h3>
+            <p><strong>Scientific name:</strong> Thymus vulgaris</p>
+            <p><strong>Origin:</strong> Mediterranean</p>
+          </div>
+          <div class="herb-back">
+            <img src="assets/herbs/thyme2.jpg" alt="Thyme">
+            <h3>Health Benefits</h3>
+            <p>• Supports respiratory health</p>
+            <p>• Acts as an antimicrobial</p>
+            <p>• Rich in antioxidants</p>
+            <p>• Boosts immune system</p>
+            <p>• Improves digestion</p>
+            <p>• Promotes skin health</p>
+            <p>• Reduces blood pressure</p>
+          </div>
+        </div>
+      </div>
+      <div class="herb-card">
+        <div class="herb-inner">
+          <div class="herb-front">
+            <img src="assets/herbs/licorice.jpg" alt="Licorice Root">
+            <h3>Licorice Root</h3>
+            <p><strong>Scientific name:</strong> Glycyrrhiza glabra</p>
+            <p><strong>Origin:</strong> Mediterranean</p>
+          </div>
+          <div class="herb-back">
+            <img src="assets/herbs/licorice2.jpg" alt="Licorice Root">
+            <h3>Health Benefits</h3>
+            <p>• Soothes digestive issues</p>
+            <p>• Supports adrenal health</p>
+            <p>• Reduces inflammation</p>
+            <p>• Eases respiratory problems</p>
+            <p>• Acts as an antioxidant</p>
+            <p>• Promotes skin health</p>
+            <p>• Supports oral health</p>
+          </div>
+        </div>
+      </div>
+      <div class="herb-card">
+        <div class="herb-inner">
+          <div class="herb-front">
+            <img src="assets/herbs/fenugreek.jpg" alt="Fenugreek">
+            <h3>Fenugreek</h3>
+            <p><strong>Scientific name:</strong> Trigonella foenum-graecum</p>
+            <p><strong>Origin:</strong> South Asia</p>
+          </div>
+          <div class="herb-back">
+            <img src="assets/herbs/fenugreek2.jpg" alt="Fenugreek">
+            <h3>Health Benefits</h3>
+            <p>• Supports blood sugar control</p>
+            <p>• Enhances digestion</p>
+            <p>• Promotes milk production</p>
+            <p>• Reduces inflammation</p>
+            <p>• Supports heart health</p>
+            <p>• Improves skin health</p>
+            <p>• Boosts testosterone levels</p>
+          </div>
+        </div>
+      </div>
+      <div class="herb-card">
+        <div class="herb-inner">
+          <div class="herb-front">
+            <img src="assets/herbs/cayenne.jpg" alt="Cayenne Pepper">
+            <h3>Cayenne Pepper</h3>
+            <p><strong>Scientific name:</strong> Capsicum annuum</p>
+            <p><strong>Origin:</strong> Central America</p>
+          </div>
+          <div class="herb-back">
+            <img src="assets/herbs/cayenne2.jpg" alt="Cayenne Pepper">
+            <h3>Health Benefits</h3>
+            <p>• Boosts metabolism</p>
+            <p>• Reduces pain</p>
+            <p>• Supports digestion</p>
+            <p>• Promotes heart health</p>
+            <p>• Enhances circulation</p>
+            <p>• Acts as an antioxidant</p>
+            <p>• Supports weight loss</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="contact" class="content-section">
+    <div class="contact-container">
+      <div class="contact-card">
+        <h3>We’d Love to Hear From You!</h3>
+        <p class="contact-lede">Have questions, comments, or ideas for collaboration? Reach out—we’re here to connect and support your journey to wellness.</p>
+        <form>
+          <input type="text" placeholder="Name" required />
+          <input type="email" placeholder="Email" required />
+          <textarea placeholder="Your Notes" required></textarea>
+          <button type="submit">Send Message</button>
+        </form>
+      </div>
+      <div class="contact-info">
+        <p><i class="fas fa-envelope"></i><a href="mailto:info@allofyourself.com">info@allofyourself.com</a></p>
+        <p><i class="fas fa-map-marker-alt"></i>5550 Glades Rd, Suite 500, Boca Raton, FL 33431</p>
+      </div>
+    </div>
+  </section>
+  <footer>
+    <p>&copy; 2025 All of Yourself. All rights reserved.</p>
+  </footer>
+  <script src="assets/js/app.js"></script>
+<script>
+// === INLINE HAMBURGER TOGGLE (authoritative) ===
+(function(){
+  const body = document.body;
+  const hamburger = document.getElementById('hamburger');
+  const menu = document.getElementById('mobileMenu');
+  const panel = menu ? menu.querySelector('.mobile-menu-panel') : null;
+  if (!hamburger || !menu || !panel) return;
+  function openMenu(){ hamburger.classList.add('open'); menu.classList.add('open'); body.classList.add('menu-open'); hamburger.setAttribute('aria-expanded','true'); }
+  function closeMenu(){ hamburger.classList.remove('open'); menu.classList.remove('open'); body.classList.remove('menu-open'); hamburger.setAttribute('aria-expanded','false'); }
+  function toggleMenu(){ menu.classList.contains('open') ? closeMenu() : openMenu(); }
+  hamburger.addEventListener('click', (e)=>{ e.stopPropagation(); toggleMenu(); });
+  document.addEventListener('click', (e)=>{ if (!menu.classList.contains('open')) return; if (!panel.contains(e.target) && !hamburger.contains(e.target)) closeMenu(); });
+  document.addEventListener('keydown', (e)=>{ if (e.key === 'Escape' && menu.classList.contains('open')) closeMenu(); });
+  menu.addEventListener('click', (e)=>{ if (e.target.closest('a.mobile-link')) setTimeout(closeMenu, 0); });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,614 @@
+/* =====================================================
+   All of Yourself — styles.css
+   Organization Guide (no visual changes):
+   1) Base / Global
+   2) Navigation
+   3) Hero / Header
+   4) Content Sections (Shared)
+   5) About
+   6) Products
+   7) Herb Grid
+   8) Video Sections
+   9) Contact
+  10) Footer
+  11) Animations
+  12) Media Queries
+   ===================================================== */
+
+body {
+  margin: 0;
+  font-family: 'Playfair Display', serif;
+  background-color: black;
+  color: white;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  padding-top: 4rem;
+}
+body.home {
+  overflow-y: hidden;
+}
+.bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+/* ========================
+   2) Navigation
+   ======================== */
+
+nav {
+  text-align: center;
+  padding: 1.2rem 0 1rem;
+  background-color: rgba(30, 30, 30, 0.2);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 2000;
+  backdrop-filter: blur(5px);
+}
+nav a {
+  color: white;
+  margin: 0 1rem;
+  text-decoration: none;
+  font-size: 1.2rem;
+  position: relative;
+}
+nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background-color: white;
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+nav a:hover::after {
+  width: 100%;
+}
+/* ========================
+   3) Hero / Header
+   ======================== */
+
+header {
+  text-align: center;
+  margin-top: 4rem;
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  animation: fadeInHero 1.2s ease-in-out;
+}
+#contact {
+  background: transparent;
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow-y: hidden;
+}
+/* ========================
+   11) Animations
+   ======================== */
+
+@keyframes fadeInHero {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+header img {
+  width: 360px;
+  cursor: pointer;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+header img:hover {
+  filter: drop-shadow(0 0 4px white);
+  transform: translateY(-4px);
+}
+header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 4.6rem;
+  margin: 0.2rem 0 0;
+}
+.motto {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  margin-top: 0.2rem;
+  max-width: 100%;
+}
+.quote {
+  font-size: 1.2rem;
+  margin-top: 3rem;
+  max-width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  font-style: italic;
+  opacity: 0.85;
+  line-height: 1.6;
+  margin-bottom: 3rem;
+}
+.quote span {
+  display: block;
+  margin-top: 0.8rem;
+  font-style: normal;
+  font-size: 1rem;
+  opacity: 0.65;
+}
+.social-icons {
+  margin-top: 2rem;
+  text-align: center;
+}
+.social-icons a {
+  color: white;
+  font-size: 2.2rem;
+  margin: 0 1.2rem;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+.social-icons a:hover {
+  color: #ccc;
+  transform: translateY(-2px);
+}
+/* ========================
+   10) Footer
+   ======================== */
+
+footer {
+  text-align: center;
+  padding: 2rem 0;
+  font-size: 1rem;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+footer.visible {
+  opacity: 1;
+}
+/* ========================
+   4) Content Sections (Shared)
+   ======================== */
+
+.content-section {
+  display: none;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 2rem;
+  padding-bottom: 4rem;
+  border-radius: 16px;
+  width: 80%;
+  position: fixed;
+  top: 4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  height: calc(100vh - 8rem);
+  overflow-y: auto;
+  z-index: 1;
+  animation: fadeOut 0.4s ease-in-out forwards, fadeIn 0.6s ease-in-out 0.4s forwards;
+  text-align: center;
+  font-size: 1.1rem;
+  line-height: 1.9;
+  opacity: 0;
+}
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+/* ========================
+   5) About
+   ======================== */
+
+#about p,
+#about .quote {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 1.5rem;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 1rem;
+  border-radius: 8px;
+}
+#about img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.3;
+  z-index: -1;
+}
+/* ========================
+   7) Herb Grid
+   ======================== */
+
+.herb-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  column-gap: 0.5rem;
+  row-gap: 1.5rem;
+  justify-content: center;
+  justify-items: center;
+  margin-top: 2rem;
+}
+.herb-card {
+  perspective: 1000px;
+  cursor: pointer;
+  width: 300px;
+  height: 480px;
+}
+.herb-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+.herb-card.flipped .herb-inner {
+  transform: rotateY(180deg);
+}
+.herb-front,
+.herb-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 1.2rem;
+  text-align: center;
+  box-sizing: border-box;
+}
+.herb-back {
+  transform: rotateY(180deg);
+}
+.herb-front img,
+.herb-back img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+.herb-front h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  margin-bottom: 0.4rem;
+}
+.herb-back h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  margin-top: 0.05rem;
+  margin-bottom: 0.2rem;
+}
+.herb-front p {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.95rem;
+  opacity: 0.85;
+  margin: 0.3rem 0;
+}
+.herb-back p {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.9rem;
+  opacity: 0.85;
+  margin: 0.1rem 0;
+  padding-left: 0.8rem;
+}
+.herb-back p {
+  text-align: left;
+}
+/* ========================
+   6) Products
+   ======================== */
+
+#products img {
+  width: 100%;
+  max-width: 600px;
+  border-radius: 12px;
+  margin: 1.5rem auto;
+  display: block;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  transition: box-shadow 0.3s ease;
+}
+#products img:hover {
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.6), 0 0 30px rgba(255, 255, 255, 0.3);
+}
+#products p {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  max-width: 700px;
+  margin: 0 auto 1.5rem;
+  opacity: 0.9;
+}
+/* ========================
+   9) Contact
+   ======================== */
+
+.contact-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 8rem);
+  margin-top: -3rem;
+}
+.contact-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
+.contact-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  opacity: 0.9;
+}
+.contact-card form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.contact-card input,
+.contact-card textarea {
+  width: 80%;
+  max-width: 400px;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+}
+.contact-card input:focus,
+.contact-card textarea:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+}
+.contact-card textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+.contact-card button {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  padding: 0.8rem 2rem;
+  color: white;
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.contact-card button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+.contact-info {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  text-align: center;
+  margin-top: 2rem;
+  opacity: 0.9;
+}
+.contact-info p {
+  margin: 0.5rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.contact-info i {
+  margin-right: 0.5rem;
+  font-size: 1.2rem;
+}
+.contact-info a {
+  color: white;
+  text-decoration: none;
+  transition: transform 0.3s ease, text-decoration 0.3s ease;
+}
+.contact-info a:hover {
+  transform: translateY(-2px);
+  text-decoration: underline;
+}
+/* ========================
+   8) Video Sections
+   ======================== */
+
+.video-hero {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto 2rem;
+}
+.video-hero img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+.video-hero .play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 4rem;
+  color: rgba(255, 255, 255, 0.9);
+  transition: transform 0.3s ease;
+}
+.video-hero:hover .play-button {
+  transform: translate(-50%, -50%) scale(1.1);
+}
+.video-carousel {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+.video-card {
+  flex: 0 0 33.33%;
+  position: relative;
+  padding: 0 0.5rem;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.video-card:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+}
+.video-card img {
+  width: 100%;
+  height: 225px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 2px solid transparent;
+  transition: border-color 0.3s ease, opacity 0.3s ease;
+}
+.video-card:hover img {
+  border-color: rgba(255, 255, 255, 0.6);
+  opacity: 0.8;
+}
+.video-card .play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3rem;
+  color: rgba(255, 255, 255, 0.9);
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  animation: pulse 1.5s infinite;
+}
+.video-card:hover .play-button {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.1);
+}
+@keyframes pulse {
+  0% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.2); }
+  100% { transform: translate(-50%, -50%) scale(1); }
+}
+.video-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  margin: 1rem 0 0.5rem;
+  text-align: center;
+  opacity: 0.9;
+}
+.carousel-nav {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  transform: translateY(-50%);
+}
+.carousel-nav button {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: white;
+  font-size: 2rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.carousel-nav button:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+/* ========================
+   12) Media Queries
+   ======================== */
+
+@media (max-width: 1200px) {
+  .herb-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    column-gap: 0.5rem;
+    row-gap: 1.5rem;
+  }
+  .video-card {
+    flex: 0 0 50%;
+  }
+}
+@media (max-width: 600px) {
+  .herb-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    column-gap: 0.5rem;
+    row-gap: 1.5rem;
+  }
+  .herb-card {
+    width: 100%;
+    max-width: 250px;
+    height: 440px;
+  }
+  .herb-front img,
+  .herb-back img {
+    height: 160px;
+  }
+  .herb-front h3 {
+    font-size: 1.4rem;
+  }
+  .herb-back h3 {
+    margin-top: 0.05rem;
+    margin-bottom: 0.2rem;
+    font-size: 1.2rem;
+  }
+  .herb-front p {
+    font-size: 0.9rem;
+    margin: 0.25rem 0;
+  }
+  .herb-back p {
+    font-size: 0.85rem;
+    margin: 0.1rem 0;
+    padding-left: 0.8rem;
+  }
+  #products img {
+    max-width: 100%;
+  }
+  .contact-card {
+    max-width: 100%;
+    padding: 1.5rem;
+  }
+  .contact-card input,
+  .contact-card textarea {
+    width: 90%;
+  }
+  .video-hero img {
+    height: 300px;
+  }
+  .video-card {
+    flex: 0 0 100%;
+  }
+  .video-card img {
+    height: 180px;
+  }
+  .video-card h3 {
+    font-size: 1rem;
+  }
+}
+
+/* Contact lead paragraph (moved from inline style) */
+.contact-lede { font-size: 1.1rem; margin-bottom: 1.5rem; opacity: 0.9; }
