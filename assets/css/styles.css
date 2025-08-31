@@ -14,7 +14,41 @@
   11) Animations
   12) Media Queries
    ===================================================== */
+/* ==========================
+   Phase 1 — Mobile Responsiveness
+   ========================== */
 
+/* Make all images fluid so they never overflow the screen */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* A flexible container that adapts to screen sizes */
+.container {
+  width: 100%;
+  max-width: 1200px;   /* keeps it readable on large screens */
+  margin: 0 auto;      /* centers on desktop */
+  padding: 1rem;       /* comfortable padding for mobile */
+}
+
+/* Responsive headline sizing */
+h1 {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+}
+
+/* Responsive body text */
+p {
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  line-height: 1.6;   /* better readability */
+}
+
+/* Optional: make buttons/links more touch-friendly */
+button,
+a {
+  padding: 0.75rem 1.2rem;
+  font-size: 1rem;
+}
 body {
   margin: 0;
   font-family: 'Playfair Display', serif;
