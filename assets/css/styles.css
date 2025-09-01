@@ -646,34 +646,3 @@ footer.visible {
 
 /* Contact lead paragraph (moved from inline style) */
 .contact-lede { font-size: 1.1rem; margin-bottom: 1.5rem; opacity: 0.9; }
-/* === Mobile Fix Patch (Phase 2 & 3) === */
-
-/* Ensure the page scales properly on small screens */
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  max-width: 100%;
-  overflow-x: hidden;
-}
-
-/* Background video scales correctly */
-video, .bg-video {
-  max-width: 100%;
-  height: auto;
-  object-fit: cover;
-}
-
-/* Nav, logo, and containers shouldn’t force zoom */
-nav, header, .logo, .container {
-  max-width: 100%;
-  box-sizing: border-box;
-}
-
-/* Fix: allow clicking links again */
-.mobile-menu {
-  pointer-events: none;   /* overlay won't block */
-}
-.mobile-menu.open {
-  pointer-events: auto;   /* only active when open */
-}
