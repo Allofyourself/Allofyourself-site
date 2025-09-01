@@ -1,40 +1,3 @@
-// =====================================================
-// All of Yourself — app.js
-// Organization Guide (no behavior changes):
-// 1) Event Bindings (DOMContentLoaded)
-// 2) Video Controls
-// 3) Section Navigation
-// 4) Herb Card Flip
-// 5) Footer Visibility
-// 6) Carousel
-// =====================================================
-{
-  "name": "All of Yourself",
-  "short_name": "AllOfYourself",
-  "start_url": "/",
-  "scope": "/",
-  "display": "standalone",
-  "orientation": "portrait",
-  "background_color": "#000000",
-  "theme_color": "#000000",
-  "icons": [
-    {
-      "src": "assets/app-icons/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "assets/app-icons/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
-  ]
-}
-
-
-// ========================
 // 2) Video Controls
 // ========================
 function restartVideo() {
@@ -201,3 +164,16 @@ if (track) {
     updateCarousel();
   });
 }
+
+// Restart background video when logo is clicked
+document.addEventListener("DOMContentLoaded", () => {
+  const logo = document.querySelector("header img");
+  const bgVideo = document.querySelector(".bg-video");
+
+  if (logo && bgVideo) {
+    logo.addEventListener("click", () => {
+      bgVideo.currentTime = 0;
+      bgVideo.play();
+    });
+  }
+});

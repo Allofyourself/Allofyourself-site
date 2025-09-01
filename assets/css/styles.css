@@ -646,3 +646,35 @@ footer.visible {
 
 /* Contact lead paragraph (moved from inline style) */
 .contact-lede { font-size: 1.1rem; margin-bottom: 1.5rem; opacity: 0.9; }
+
+/* Contact lead paragraph (moved from inline style) */
+.contact-lede { font-size: 1.1rem; margin-bottom: 1.5rem; opacity: 0.9; }
+
+/* === Mobile Fixes === */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+}
+
+header img {
+  max-width: 90%;
+  height: auto;
+}
+
+/* Links overlay fix */
+.mobile-menu {
+  pointer-events: none;
+}
+.mobile-menu.open {
+  pointer-events: auto;
+}
+
+/* Hide iOS Safari play overlay on background video */
+.bg-video::-webkit-media-controls {
+  display: none !important;
+}
+
