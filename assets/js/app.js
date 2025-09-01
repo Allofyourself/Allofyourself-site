@@ -177,3 +177,17 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+// Ensure Safari does not show controls on background video
+document.addEventListener("DOMContentLoaded", () => {
+  const bgVideo = document.querySelector(".bg-video");
+  if (bgVideo) {
+    bgVideo.removeAttribute("controls");
+    bgVideo.setAttribute("webkit-playsinline", "");
+    bgVideo.setAttribute("playsinline", "");
+    bgVideo.addEventListener("ended", () => {
+      // Pause quietly when done (no overlay)
+      bgVideo.pause();
+    });
+  }
+});

@@ -673,8 +673,38 @@ header img {
   pointer-events: auto;
 }
 
+/* === Mobile app-like fixes === */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Background video scales perfectly */
+.bg-video {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+}
+
+/* Prevent oversized header/logo on mobile */
+header img {
+  max-width: 70%;
+  height: auto;
+}
+header h1 {
+  font-size: clamp(1.8rem, 5vw, 3rem);
+}
+.motto {
+  font-size: clamp(1rem, 3.5vw, 1.3rem);
+}
+
 /* Hide iOS Safari play overlay on background video */
 .bg-video::-webkit-media-controls {
   display: none !important;
 }
+
 
