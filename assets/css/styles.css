@@ -644,13 +644,14 @@ footer.visible {
   }
 }
 
-/* Contact lead paragraph (moved from inline style) */
-.contact-lede { font-size: 1.1rem; margin-bottom: 1.5rem; opacity: 0.9; }
+/* === Contact lead paragraph === */
+.contact-lede {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  opacity: 0.9;
+}
 
-/* Contact lead paragraph (moved from inline style) */
-.contact-lede { font-size: 1.1rem; margin-bottom: 1.5rem; opacity: 0.9; }
-
-/* === Mobile Fixes === */
+/* === Mobile Foundations === */
 html, body {
   margin: 0;
   padding: 0;
@@ -658,36 +659,6 @@ html, body {
   max-width: 100%;
   overflow-x: hidden;
   -webkit-text-size-adjust: 100%;
-}
-
-header img {
-  max-width: 90%;
-  height: auto;
-}
-
-/* Links overlay fix */
-.mobile-menu {
-  pointer-events: none;
-}
-.mobile-menu.open {
-  pointer-events: auto;
-}
-
-/* === Mobile app-like fixes === */
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  max-width: 100%;
-  overflow-x: hidden;
-  -webkit-text-size-adjust: 100%;
-}
-
-/* Background video scales perfectly */
-.bg-video {
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
 }
 
 /* Prevent oversized header/logo on mobile */
@@ -702,21 +673,38 @@ header h1 {
   font-size: clamp(1rem, 3.5vw, 1.3rem);
 }
 
-/* Hide iOS Safari play overlay on background video */
-.bg-video::-webkit-media-controls {
-  display: none !important;
+/* Background video scales perfectly */
+.bg-video {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
 }
 
 /* === Captain's Mobile Refinements & Bug Fixes === */
 
-/* 1. Base scaling (85%) */
+/* 1. Force body to scale like 85% zoom */
 @media (max-width: 600px) {
-  html {
-    font-size: 15px; /* ~85% zoom */
+  body {
+    transform: scale(0.85);
+    transform-origin: top center;
+    width: 117.6%; /* compensates scaling */
   }
 }
 
-/* 2. Refined hamburger sizing */
+/* 2. Lock scrolling everywhere except Herbs */
+html, body {
+  overflow: hidden;
+  height: 100%;
+}
+.content-section {
+  overflow: hidden !important;
+}
+#herbs {
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* 3. Refined hamburger sizing */
 .hamburger {
   width: 38px !important;
   height: 28px !important;
@@ -727,32 +715,44 @@ header h1 {
   height: 2px !important;
 }
 
-/* 3. Dark background only for inner sections (not Home or Contact) */
-body:not(.home):not(.contact) .content-section {
-  background-color: rgba(20,20,20,0.95);
+/* 4. Hamburger menu toggle (clean, no pointer-events conflict) */
+.mobile-menu {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.mobile-menu.open {
+  visibility: visible;
+  opacity: 1;
 }
 
-/* 4. Hamburger menu panel — shrink to content height */
+/* 5. Hamburger menu panel — shrink to content height */
 .mobile-menu-panel {
   height: auto !important;
   max-height: none !important;
 }
 
-/* 5. Hamburger menu toggle (fixes pointer-events issue) */
-.mobile-menu {
-  display: none;
-}
-.mobile-menu.open {
-  display: block;
+/* 6. Dark background only for inner sections (not Home or Contact) */
+body:not(.home):not(.contact) .content-section {
+  background-color: rgba(20,20,20,0.95);
 }
 
-/* 6. Force-hide background video play button overlays */
-.bg-video::-webkit-media-controls,
-.bg-video::-webkit-media-controls-enclosure,
-.bg-video::-webkit-media-controls-panel,
-video::-webkit-media-controls {
+/* 7. Kill ALL play button overlays on background video */
+video::-webkit-media-controls,
+video::-webkit-media-controls-enclosure,
+video::-webkit-media-controls-panel,
+video::-webkit-media-controls-play-button,
+video::-webkit-media-controls-start-playback-button {
   display: none !important;
-  -webkit-appearance: none;
+  -webkit-appearance: none !important;
+}
+
+/* 8. Keep footer locked at bottom */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
 }
 
 
