@@ -745,37 +745,35 @@ body:not(.home):not(.contact) nav {
   border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
-/* === Captain's Mobile Refinements — Round 2 === */
+/* === Captain's Mobile Refinements — Corrected Round 2 === */
 
 /* 1. Base scaling (85%) */
 @media (max-width: 600px) {
   html {
-    font-size: 15px;
+    font-size: 15px; /* ~85% zoom */
   }
 }
 
-/* 2. Bigger nav bar + hamburger */
+/* 2. Refined hamburger sizing */
 .hamburger {
-  width: 46px !important;
-  height: 34px !important;
-  left: 1.5rem !important;
+  width: 38px !important;
+  height: 28px !important;
+  left: 1rem !important;
 }
 .hamburger-line {
-  width: 32px !important;
-  height: 3px !important;
-}
-nav {
-  height: 4.5rem !important;
+  width: 28px !important;
+  height: 2px !important;
 }
 
-/* 3. Full dark background on inner pages */
-body:not(.home):not(.contact) {
+/* 3. Dark background only for inner sections (not Home or Contact) */
+body:not(.home):not(.contact) .content-section {
   background-color: rgba(20,20,20,0.95);
 }
 
-/* 4. Shorter hamburger menu panel */
+/* 4. Hamburger menu panel — shrink to content height */
 .mobile-menu-panel {
   height: auto !important;
-  max-height: 80vh;
+  max-height: none !important;
 }
+
 
