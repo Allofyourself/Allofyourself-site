@@ -715,23 +715,6 @@ html, body {
   height: 2px !important;
 }
 
-/* 4. Hamburger menu toggle (clean, no pointer-events conflict) */
-.mobile-menu {
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-}
-.mobile-menu.open {
-  visibility: visible;
-  opacity: 1;
-}
-
-/* 5. Hamburger menu panel — shrink to content height */
-.mobile-menu-panel {
-  height: auto !important;
-  max-height: none !important;
-}
-
 /* 6. Dark background only for inner sections (not Home or Contact) */
 body:not(.home):not(.contact) .content-section {
   background-color: rgba(20,20,20,0.95);
@@ -755,5 +738,12 @@ footer {
   width: 100%;
 }
 
+/* === Fix Hamburger Menu Toggle (clean) === */
+.mobile-menu {
+  display: none; /* hidden by default */
+}
+.mobile-menu.open {
+  display: block; /* shown when JS adds .open */
+}
 
 
