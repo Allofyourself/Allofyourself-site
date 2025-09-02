@@ -707,4 +707,42 @@ header h1 {
   display: none !important;
 }
 
+/* === Captain's Mobile App Refinements === */
+
+/* 1. Base scaling for mobile (clean ~75% look) */
+@media (max-width: 600px) {
+  html {
+    font-size: 14px; /* effectively ~75% zoom */
+  }
+}
+
+/* 2. Lock scrolling everywhere except Healing Herbs */
+html, body {
+  overflow: hidden;
+  height: 100%;
+}
+.content-section {
+  overflow: hidden;
+}
+#herbs {
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* 3. Bigger Hamburger + Connected Nav Bar */
+.hamburger {
+  width: 42px;
+  height: 32px;
+  left: 1.5rem;
+}
+.hamburger-line {
+  width: 34px;
+  height: 3px;
+}
+body:not(.home):not(.contact) nav {
+  background-color: rgba(20,20,20,0.85);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
 
