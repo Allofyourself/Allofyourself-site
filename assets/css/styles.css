@@ -707,45 +707,7 @@ header h1 {
   display: none !important;
 }
 
-/* === Captain's Mobile App Refinements === */
-
-/* 1. Base scaling for mobile (clean ~75% look) */
-@media (max-width: 600px) {
-  html {
-    font-size: 14px; /* effectively ~75% zoom */
-  }
-}
-
-/* 2. Lock scrolling everywhere except Healing Herbs */
-html, body {
-  overflow: hidden;
-  height: 100%;
-}
-.content-section {
-  overflow: hidden;
-}
-#herbs {
-  overflow-y: auto !important;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* 3. Bigger Hamburger + Connected Nav Bar */
-.hamburger {
-  width: 42px;
-  height: 32px;
-  left: 1.5rem;
-}
-.hamburger-line {
-  width: 34px;
-  height: 3px;
-}
-body:not(.home):not(.contact) nav {
-  background-color: rgba(20,20,20,0.85);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-
-/* === Captain's Mobile Refinements — Corrected Round 2 === */
+/* === Captain's Mobile Refinements & Bug Fixes === */
 
 /* 1. Base scaling (85%) */
 @media (max-width: 600px) {
@@ -775,5 +737,23 @@ body:not(.home):not(.contact) .content-section {
   height: auto !important;
   max-height: none !important;
 }
+
+/* 5. Hamburger menu toggle (fixes pointer-events issue) */
+.mobile-menu {
+  display: none;
+}
+.mobile-menu.open {
+  display: block;
+}
+
+/* 6. Force-hide background video play button overlays */
+.bg-video::-webkit-media-controls,
+.bg-video::-webkit-media-controls-enclosure,
+.bg-video::-webkit-media-controls-panel,
+video::-webkit-media-controls {
+  display: none !important;
+  -webkit-appearance: none;
+}
+
 
 
